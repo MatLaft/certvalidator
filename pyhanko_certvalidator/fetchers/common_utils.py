@@ -85,7 +85,12 @@ def unpack_cert_content(
                 f"include a content type, assuming response body is a single "
                 f"DER-encoded X.509 certificate."
             )
-        yield x509.Certificate.load(response_data)
+        cert = x509.Certificate.load(response_data)
+        try:
+            if cert.native:  # If this code doesn't raise an ValueError it means that successfully loaded a certificate
+                yield cert
+        except ValueError:
+            yield from _unpack_der_pkcs7(response_data, url)
     elif (content_type in ACCEPTABLE_PKCS7_DER_ALIASES) and not is_pem:
         yield from _unpack_der_pkcs7(response_data, url)
     elif permit_pem and is_pem:

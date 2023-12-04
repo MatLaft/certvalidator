@@ -42,6 +42,7 @@ def test_build_paths_custom_ca_certs():
         "southwest.com",
         "xuite.net",
         "icpedu.rnp.br",
+        "repositorio.serpro.gov.br",
     ],
 )
 @pytest.mark.asyncio
@@ -52,10 +53,12 @@ async def test_basic_certificate_validator_tls_aia(domain):
     # southwest.com -> application/pkcs7-mime
     # xuite.net     -> application/x-pkcs7-certificates
     # icpedu.rnp.br -> binary/octet-stream (PEM, PKCS#7)
+    # repositorio.serpro.gov.br -> binary/octet-stream (DER, PKCS#7)
 
     icpedu_root = load_cert_object('testing-aia', 'root-icpedu.rnp.br')
+    serpro_root = load_cert_object('testing-aia', 'root-repositorio.serpro.gov.br')
     trust_manager = SimpleTrustManager.build(
-        extra_trust_roots=[icpedu_root],
+        extra_trust_roots=[icpedu_root, serpro_root],
     )
     cert = load_cert_object('testing-aia', domain)
     registry = CertificateRegistry.build(

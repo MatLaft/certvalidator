@@ -56,7 +56,9 @@ async def test_basic_certificate_validator_tls_aia(domain):
     # repositorio.serpro.gov.br -> binary/octet-stream (DER, PKCS#7)
 
     icpedu_root = load_cert_object('testing-aia', 'root-icpedu.rnp.br')
-    serpro_root = load_cert_object('testing-aia', 'root-repositorio.serpro.gov.br')
+    serpro_root = load_cert_object(
+        'testing-aia', 'root-repositorio.serpro.gov.br'
+    )
     trust_manager = SimpleTrustManager.build(
         extra_trust_roots=[icpedu_root, serpro_root],
     )

@@ -82,8 +82,8 @@ def unpack_cert_content(
         if content_type is None:
             logger.warning(
                 f"Response to certificate fetch request to {url} did not "
-                f"include a content type, assuming response body is a single "
-                f"DER-encoded X.509 certificate."
+                f"include a content type, verifying it's sequence length to "
+                f"check if it is a certificate or pkcs7."
             )
         der_sequence_length = len(core.Sequence.load(response_data))
         if der_sequence_length == 2:

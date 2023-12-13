@@ -31,9 +31,7 @@ from pyhanko_certvalidator.fetchers import (
     OCSPFetcher,
     aiohttp_fetchers,
     requests_fetchers,
-    common_utils,
 )
-
 from pyhanko_certvalidator.ltv.poe import POEManager
 from pyhanko_certvalidator.path import QualifiedPolicy, ValidationPath
 from pyhanko_certvalidator.policy_decl import (
